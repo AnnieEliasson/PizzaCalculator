@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Calligraffitti&family=Goldman:wght@400;700&family=Whisper&display=swap');
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+  background-color: rgb(40, 40, 40);
+	font-family: "Annie Use Your Telescope", cursive;
+	width: 100vw;
+	height: 100vh;
+	color: white;
+	text-shadow: 2px 2px 2px black;
+    letter-spacing: 2px;
+
+}
+
+
+input{
+    margin-right: 30px;
+}
+
+.Create-Pizza{
+    background-color: rgb(47, 47, 47);
+    padding: 50px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.Cart{
+    background-color: darkslategray;
+    padding: 50px;
+    width: fit-content;
+}
+
+fieldset{
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.add-btn{
+    padding: 20px;
+    margin-top: 30px;
+}
+
+
+h2{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+span{
+    color: rgb(161, 241, 255);
+}
+
+.inputs{
+    background-color: rgb(58, 75, 78);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
+}
