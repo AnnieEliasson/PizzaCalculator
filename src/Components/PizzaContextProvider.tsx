@@ -1,20 +1,18 @@
 import React, { createContext, useReducer } from "react";
-/* import uuid from "react-uuid"; */
 
 type PropList = {
   children: React.ReactNode;
 };
 
 export type Topping = {
-  pommes: boolean;
-  sås: boolean;
-  skinka: boolean;
+  [key: string]: boolean;
 };
 
 export type Pizza = {
   id: string;
   size: string;
   toppings: Topping;
+  totalPrice: number;
 };
 
 type PizzaState = {
@@ -23,22 +21,22 @@ type PizzaState = {
 
 const initialPizzas: PizzaState = {
   pizzas: [
-    /* {
-      id: uuid(),
-      size: "small",
-      toppings: {
-        pommes: false,
-        sås: false,
-        skinka: false,
-      },
-    }, */
+    //  {
+    //   id: uuid(),
+    //   size: "small",
+    //   toppings: {
+    //     pommes: false,
+    //     sås: false,
+    //     skinka: false,
+    //   },
+    //   totalPrice: 0,
+    // }, 
   ],
 };
 
-type Action = {
-  type: string;
-  payload: Pizza | string;
-};
+type Action =
+  | { type: "ADD"; payload: Pizza }
+  | { type: "REMOVE"; payload: string }
 
 const reducer = (state: PizzaState, action: Action) => {
   switch (action.type) {

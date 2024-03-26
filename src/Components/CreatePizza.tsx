@@ -5,6 +5,33 @@ import { useState } from "react";
 import { Pizza } from "./PizzaContextProvider";
 
 const CreatePizza = () => {
+
+  let sizePrice = 0;
+  let toppingPrice = 0;
+
+  
+  const calcPrice = (pizza: Pizza) => {    
+    let trueToppings = Object.keys(pizza.toppings).filter((topping) => pizza.toppings[topping]);
+    toppingPrice = trueToppings.length * 10;
+    console.log(toppingPrice)
+
+    switch (pizza.size) {
+      case "Small":
+      sizePrice = 25;        
+        break;
+      case "Medium":
+        sizePrice = 50;
+          break;
+        case "Big":
+          sizePrice = 75;
+            break;    
+      default: 
+        break;
+    }
+
+    pizza.totalPrice = toppingPrice + sizePrice;   
+  }
+
   const { dispatch } = useContext(PizzaContext);
   const [pizza, SetPizza] = useState<Pizza>({
     id: uuid(),
@@ -14,8 +41,9 @@ const CreatePizza = () => {
       sås: false,
       skinka: false,
     },
+    totalPrice: 0,
   });
-
+  calcPrice(pizza);
   return (
     <div className="Create-Pizza">
       <h1>CreatePizza</h1>
@@ -30,7 +58,7 @@ const CreatePizza = () => {
           }}
           type="radio"
           name="size"
-          id="Small"
+          id="Small"          
         />
 
         <label htmlFor="Medium">Medium</label>
@@ -40,7 +68,7 @@ const CreatePizza = () => {
           }}
           type="radio"
           name="size"
-          id="Medium"
+          id="Medium"          
         />
 
         <label htmlFor="Big">Big</label>
@@ -50,7 +78,7 @@ const CreatePizza = () => {
           }}
           type="radio"
           name="size"
-          id="Big"
+          id="Big"          
         />
       </fieldset>
       <fieldset>
@@ -125,8 +153,7 @@ const CreatePizza = () => {
         {pizza.toppings.sås ? "Sås, " : ""}
         {pizza.toppings.skinka ? "Skinka, " : ""}
         </p>
-
-        
+        <p>Pris: {pizza.totalPrice}</p>        
       </ul>
       <button className="add-btn"
         onClick={() => {
@@ -140,10 +167,11 @@ const CreatePizza = () => {
               sås: false,
               skinka: false,
             },
+            totalPrice: 0,
           })
 
           const checkboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".topping")
-          const radios: NodeListOf<HTMLInputElement> = document.getElementsByName("size")
+          const radios = document.getElementsByName("size") as NodeListOf<HTMLInputElement>
           checkboxes.forEach(box => {
             box.checked = false
           });
