@@ -41,8 +41,6 @@ type Action =
 const reducer = (state: PizzaState, action: Action) => {
   switch (action.type) {
     case "ADD":
-      console.log(state);
-
       return { pizzas: [...state.pizzas, action.payload] };
 
       case 'REMOVE': 
