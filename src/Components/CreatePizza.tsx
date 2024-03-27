@@ -6,13 +6,10 @@ import { Pizza } from "./PizzaContextProvider";
 
 const CreatePizza = () => {
   let sizePrice = 0;
-  let toppingPrice = 0;
+  
 
   const calcPrice = (pizza: Pizza) => {
-    let trueToppings = Object.keys(pizza.toppings).filter(
-      (topping) => pizza.toppings[topping]
-    );
-    toppingPrice = trueToppings.length * 10;
+    
 
     switch (pizza.size) {
       case "Small":
@@ -28,18 +25,14 @@ const CreatePizza = () => {
         break;
     }
 
-    pizza.totalPrice = toppingPrice + sizePrice;
+    pizza.totalPrice =  sizePrice;
   };
 
   const { dispatch } = useContext(PizzaContext);
   const [pizza, SetPizza] = useState<Pizza>({
     id: uuid(),
     size: "",
-    toppings: {
-      pommes: false,
-      sås: false,
-      skinka: false,
-    },
+    
     totalPrice: 0,
   });
   calcPrice(pizza);
@@ -90,11 +83,7 @@ const CreatePizza = () => {
                 onClick={() => {
                   SetPizza({
                     ...pizza,
-                    toppings: {
-                      pommes: !pizza.toppings.pommes,
-                      sås: pizza.toppings.sås,
-                      skinka: pizza.toppings.skinka,
-                    },
+                    
                   });
                 }}
                 type="checkbox"
@@ -109,11 +98,7 @@ const CreatePizza = () => {
                 onClick={() => {
                   SetPizza({
                     ...pizza,
-                    toppings: {
-                      pommes: pizza.toppings.pommes,
-                      sås: !pizza.toppings.sås,
-                      skinka: pizza.toppings.skinka,
-                    },
+                    
                   });
                 }}
                 type="checkbox"
@@ -128,11 +113,7 @@ const CreatePizza = () => {
                 onClick={() => {
                   SetPizza({
                     ...pizza,
-                    toppings: {
-                      pommes: pizza.toppings.pommes,
-                      sås: pizza.toppings.sås,
-                      skinka: !pizza.toppings.skinka,
-                    },
+                   
                   });
                 }}
                 type="checkbox"
@@ -151,9 +132,7 @@ const CreatePizza = () => {
       <ul>
         <p>
           <span>Toppings: </span>
-          {pizza.toppings.pommes ? "Pommes, " : ""}
-          {pizza.toppings.sås ? "Sås, " : ""}
-          {pizza.toppings.skinka ? "Skinka, " : ""}
+         
         </p>
         <p>Pris: {pizza.totalPrice}</p>
       </ul>
@@ -164,11 +143,7 @@ const CreatePizza = () => {
           SetPizza({
             id: uuid(),
             size: "",
-            toppings: {
-              pommes: false,
-              sås: false,
-              skinka: false,
-            },
+           
             totalPrice: 0,
           });
 

@@ -11,7 +11,7 @@ export type Topping = {
 export type Pizza = {
   id: string;
   size: string;
-  toppings: Topping;
+ 
   totalPrice: number;
 };
 
