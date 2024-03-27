@@ -4,14 +4,15 @@ import { PizzaContext } from "./PizzaContextProvider";
 const Cart = () => {
   const { state, dispatch } = useContext(PizzaContext);
 
-  let totalAmount = 0;
-  const endPrice = () => {
-    state.pizzas.forEach((p) => {
-      totalAmount = totalAmount + p.totalPrice;
-    });
-  };
-  endPrice();
+//   let totalAmount = 0;
+//   const endPrice = () => {
+//     state.pizzas.forEach((p) => {
+//       totalAmount = totalAmount + p.totalPrice;
+//     });
+//   };
+//   endPrice();
 
+  
   return (
     <div className="Cart">
       <h1>Kundkorg</h1>
@@ -19,7 +20,9 @@ const Cart = () => {
         {state.pizzas.map((p) => {
           return (
             <li key={p.id}>
-              Size: {p.size}  <p>Pris: {p.totalPrice}</p>
+              <p>Size: {p.size} </p> 
+              {p.topping.map((t) => <p key={t.name}>{t.name}, {t.price} kr</p>)}
+              <p>Pris: {p.totalPrice}</p>
               <button
                 onClick={(e) => {
                   dispatch({
@@ -32,10 +35,10 @@ const Cart = () => {
               >
                 X
               </button>
+              <p>Total Summa: {p.totalPrice}</p>
             </li>
           );
         })}
-        <p>Total Summa: {totalAmount}</p>
       </ul>
     </div>
   );

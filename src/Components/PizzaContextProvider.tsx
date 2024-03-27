@@ -5,13 +5,14 @@ type PropList = {
 };
 
 export type Topping = {
-  [key: string]: boolean;
-};
+  name: string;
+  price: number;
+}; 
 
 export type Pizza = {
   id: string;
   size: string;
- 
+  topping: Topping[];
   totalPrice: number;
 };
 

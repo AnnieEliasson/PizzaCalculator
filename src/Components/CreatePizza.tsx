@@ -1,15 +1,24 @@
 import { useContext } from "react";
-import { PizzaContext } from "./PizzaContextProvider";
+import { PizzaContext, Topping } from "./PizzaContextProvider";
 import uuid from "react-uuid";
 import { useState } from "react";
 import { Pizza } from "./PizzaContextProvider";
+import { toppings } from "./Toppings";
 
 const CreatePizza = () => {
-  let sizePrice = 0;
-  
+  const [toppingArr, setToppingArr] = useState([] as Topping[]);
+
+  const { dispatch } = useContext(PizzaContext);
+  const [pizza, SetPizza] = useState<Pizza>({
+    id: uuid(),
+    size: "",
+    topping: [],
+    totalPrice: 0,
+  });
 
   const calcPrice = (pizza: Pizza) => {
-    
+    let sizePrice = 0;
+    let toppingPrice = 0;
 
     switch (pizza.size) {
       case "Small":
@@ -25,17 +34,13 @@ const CreatePizza = () => {
         break;
     }
 
-    pizza.totalPrice =  sizePrice;
+    toppingArr.forEach((t) => {
+      toppingPrice = toppingPrice + t.price;
+    });
+
+    SetPizza({ ...pizza, totalPrice: sizePrice + toppingPrice });
   };
 
-  const { dispatch } = useContext(PizzaContext);
-  const [pizza, SetPizza] = useState<Pizza>({
-    id: uuid(),
-    size: "",
-    
-    totalPrice: 0,
-  });
-  calcPrice(pizza);
   return (
     <div className="Create-Pizza">
       <h1>CreatePizza</h1>
@@ -80,49 +85,55 @@ const CreatePizza = () => {
             <li>
               <input
                 className="topping"
-                onClick={() => {
-                  SetPizza({
-                    ...pizza,
-                    
-                  });
+                onClick={(e: any) => {
+                  let choise = toppings.find((t) => t.name === e.target.id);
+                  setToppingArr([...toppingArr, choise as Topping]);
                 }}
                 type="checkbox"
                 name="pommes"
-                id="Pommes"
+                id="pommes"
               />
               <label htmlFor="Pommes">Pommes</label>
             </li>
             <li>
               <input
                 className="topping"
-                onClick={() => {
-                  SetPizza({
-                    ...pizza,
-                    
-                  });
+                onClick={(e: any) => {
+                  let choise = toppings.find((t) => t.name === e.target.id);
+                  setToppingArr([...toppingArr, choise as Topping]);
                 }}
                 type="checkbox"
                 name="sås"
-                id="Sås"
+                id="sås"
               />
               <label htmlFor="Sås">Sås</label>
             </li>
             <li>
               <input
                 className="topping"
-                onClick={() => {
-                  SetPizza({
-                    ...pizza,
-                   
-                  });
+                onClick={(e: any) => {
+                  let choise = toppings.find((t) => t.name === e.target.id);
+                  setToppingArr([...toppingArr, choise as Topping]);
                 }}
                 type="checkbox"
                 name="skinka"
-                id="Skinka"
+                id="skinka"
               />
               <label htmlFor="Skinka">Skinka</label>
             </li>
           </ul>
+
+          <button
+            onClick={() => {
+              calcPrice(pizza);
+              SetPizza({
+                ...pizza,
+                topping: toppingArr,
+              });
+            }}
+          >
+            Lägg till A
+          </button>
         </fieldset>
       </div>
       <h2>Din Pizza:</h2>
@@ -130,10 +141,11 @@ const CreatePizza = () => {
         <span>Storlek: </span> {pizza.size}
       </p>
       <ul>
-        <p>
-          <span>Toppings: </span>
-         
-        </p>
+        <span>Toppings: </span>
+        {toppingArr.map((t) => (
+          <p key={t.name}>{t.name}</p>
+        ))}
+
         <p>Pris: {pizza.totalPrice}</p>
       </ul>
       <button
@@ -143,7 +155,7 @@ const CreatePizza = () => {
           SetPizza({
             id: uuid(),
             size: "",
-           
+            topping: [],
             totalPrice: 0,
           });
 
